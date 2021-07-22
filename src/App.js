@@ -13,6 +13,7 @@ class App extends Component {
   state = {
     images: [],
     currentPage: 1,
+    currentPageImages: [],
     searchQuery: '',
     isLoading: false,
     error: null,
@@ -48,6 +49,7 @@ class App extends Component {
         this.setState(prevState => ({
           images: [...prevState.images, ...images],
           currentPage: prevState.currentPage + 1,
+          currentPageImages: [...images],
         }));
       })
       .catch(error => this.setState({ error }))
@@ -66,9 +68,16 @@ class App extends Component {
     this.toogleModal();
   };
   render() {
-    const { images, isLoading, error, showModal, modalAlt, modalUrl } =
-      this.state;
-    const souldLoadMoreButton = images.length > 0 && !isLoading;
+    const {
+      images,
+      currentPageImages,
+      isLoading,
+      error,
+      showModal,
+      modalAlt,
+      modalUrl,
+    } = this.state;
+    const souldLoadMoreButton = !(currentPageImages.length < 12) && !isLoading;
     return (
       <div className={styles.App}>
         {error && <p color="red">{error}</p>}
