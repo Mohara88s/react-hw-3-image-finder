@@ -51,6 +51,11 @@ class App extends Component {
           currentPage: prevState.currentPage + 1,
           currentPageImages: [...images],
         }));
+        if (images.length === 0) {
+          this.setState({
+            error: 'Nothing was find by your query. Try again.',
+          });
+        }
       })
       .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -80,8 +85,12 @@ class App extends Component {
     const souldLoadMoreButton = !(currentPageImages.length < 12) && !isLoading;
     return (
       <div className={styles.App}>
-        {error && <p color="red">{error}</p>}
         <Searchbar onSubmit={this.onChangeQuery} />
+        {error && (
+          <p style={{ color: 'red', textAlign: 'center', fontSize: '20px' }}>
+            This is error: {error}
+          </p>
+        )}
         <ImageGallery>
           {images.map(({ id, tags, webformatURL, largeImageURL }) => (
             <ImageGalleryItem

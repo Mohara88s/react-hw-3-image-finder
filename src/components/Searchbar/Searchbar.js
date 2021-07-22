@@ -10,8 +10,10 @@ class Searchbar extends Component {
   };
   hendleSubmit = event => {
     event.preventDefault();
-    this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
+    if (this.state.query.length !== 0) {
+      this.props.onSubmit(this.state.query);
+      this.setState({ query: '' });
+    }
   };
 
   render() {
