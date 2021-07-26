@@ -57,7 +57,7 @@ class App extends Component {
           });
         }
       })
-      .catch(error => this.setState({ error }))
+      .catch(error => this.setState({ error: error.message }))
       .finally(() => this.setState({ isLoading: false }));
   };
 
